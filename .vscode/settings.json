@@ -1,5 +1,5 @@
 {
-    "cSpell.words": ["commitlint", "lintfix"],
+    "cSpell.words": ["commitlint", "glyphicon", "lintfix"],
     "eslint.format.enable": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true

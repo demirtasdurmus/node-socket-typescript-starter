@@ -1,6 +1,7 @@
 import { createServer, Server as HttpServer } from 'http';
-import { DisconnectReason, Socket, Server as SocketServer } from 'socket.io';
+import { Socket, Server as SocketServer } from 'socket.io';
 import { app } from './app';
+import namespaces from './data/namespaces';
 
 const PORT = 3000;
 const server: HttpServer = createServer(app);
@@ -12,30 +13,20 @@ const io = new SocketServer(server, {
 });
 
 io.on('connect', (socket: Socket) => {
+    // eslint-disable-next-line no-console
     console.log('a user connected', socket.id);
-    // Broadcast to all clients
-    io.emit('new_broadcast', { type: 'Broadcast', message: `User with id ${socket.id} connected` });
 
-    socket.on('chat_message', (msg) => {
-        console.log('message: ' + msg);
+    socket.emit('welcome', 'Hello from server');
 
-        // Broadcast to all clients except sender
-        socket.broadcast.emit('new_broadcast', {
-            type: 'Broadcast',
-            message: 'THis message is only to you, not the sender',
-        });
+    socket.on('clientConnect', () => {
+        // eslint-disable-next-line no-console
+        console.log(socket.id, 'has connected');
     });
 
-    socket.on('disconnect', (reason: DisconnectReason) => {
-        console.log('user disconnected', reason);
-        // Broadcast to all clients except sender
-        socket.broadcast.emit('new_broadcast', {
-            type: 'Broadcast',
-            message: `User with id ${socket.id} disconnected`,
-        });
-    });
+    socket.emit('nsList', namespaces);
 });
 
 server.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Listening on port ${PORT}`);
 });
