@@ -1,4 +1,4 @@
-class Room {
+export class Room {
     constructor(
         public id: number,
         public name: string,
@@ -16,7 +16,7 @@ class Room {
     }
 }
 
-class Namespace {
+export class Namespace {
     constructor(
         public id: number,
         public name: string,
@@ -63,7 +63,7 @@ const linuxNamespace = new Namespace(
 linuxNamespace.addRoom(new Room(0, 'Debian', '2'));
 linuxNamespace.addRoom(new Room(1, 'Red Hat', '2'));
 linuxNamespace.addRoom(new Room(2, 'MacOs', '2'));
-linuxNamespace.addRoom(new Room(3, 'Kernal Development', '2'));
+linuxNamespace.addRoom(new Room(3, 'Kernal Development', '2', true));
 
 const namespaces = [wikiNamespace, mozillaNamespace, linuxNamespace];
 export default namespaces;
